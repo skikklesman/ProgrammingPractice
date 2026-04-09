@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Program Files/Microsoft Visual Studio/2022//**)",
+      "Read(//c/Program Files \\(x86\\)/Microsoft Visual Studio//**)"
+    ]
+  }
+}

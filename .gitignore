@@ -1,0 +1,21 @@
+# Build output
+build/
+out/
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+*.user
+CMakeSettings.json
+
+# Compiled objects
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# OS files
+Thumbs.db
+.DS_Store
