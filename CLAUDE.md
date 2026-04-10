@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Purpose
 
-A C++17 exercise repo for practicing algorithms, debugging (bug-hunts), and performance optimization. Each exercise is self-contained with a problem description, starter code, and tests.
+A C++17 exercise repo where the user practices algorithms, debugging, and performance optimization. Claude's role is to create exercises (with intentional bugs or slow code), add test cases, and assess the user's solutions — not to solve exercises for them. Each exercise is self-contained with a problem description, starter code, and tests. Always include many stress tests by default: edge cases, large inputs, boundary conditions, and diverse scenarios. Do not wait to be asked for thorough test coverage.
 
 ## Build Commands
 
