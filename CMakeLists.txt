@@ -8,7 +8,7 @@ enable_testing()
 
 # Collect all exercise test executables automatically.
 # Each exercise directory contains a test.cpp that is built as its own target.
-file(GLOB_RECURSE EXERCISE_TESTS exercises/*/test.cpp)
+file(GLOB_RECURSE EXERCISE_TESTS CONFIGURE_DEPENDS exercises/*/test.cpp)
 
 foreach(TEST_SOURCE ${EXERCISE_TESTS})
     # Derive a unique target name from the path, e.g. algorithms_01_two_sum
@@ -17,7 +17,7 @@ foreach(TEST_SOURCE ${EXERCISE_TESTS})
     string(REPLACE "/" "_" TARGET_NAME ${REL_DIR})
 
     # Gather all .cpp files in the exercise directory (test + solution)
-    file(GLOB EXERCISE_SOURCES ${TEST_DIR}/*.cpp)
+    file(GLOB EXERCISE_SOURCES CONFIGURE_DEPENDS ${TEST_DIR}/*.cpp)
 
     add_executable(${TARGET_NAME} ${EXERCISE_SOURCES})
     target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include ${TEST_DIR})
