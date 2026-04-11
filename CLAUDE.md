@@ -17,12 +17,12 @@ cmake -B build
 # Build everything
 cmake --build build
 
-# Run all tests
-ctest --test-dir build --output-on-failure
+# Run all tests (MSVC is a multi-config generator — `-C Debug` is required)
+ctest --test-dir build -C Debug --output-on-failure
 
 # Build & run a single exercise (target name = path with "/" replaced by "_")
-cmake --build build --target algorithms_01_two_sum
-ctest --test-dir build -R algorithms_01_two_sum --output-on-failure
+cmake --build build --target algorithms_01_two_sum --config Debug
+ctest --test-dir build -R algorithms_01_two_sum -C Debug --output-on-failure
 ```
 
 Target naming convention: `exercises/algorithms/01_two_sum/` becomes target `algorithms_01_two_sum`.
@@ -50,4 +50,5 @@ Each exercise directory contains:
 ## Shared Headers (`include/practice/`)
 
 - **test.h** — zero-dependency test harness. Macros: `TEST(name)`, `EXPECT(expr)`, `EXPECT_EQ(a,b)`, `EXPECT_NEAR(a,b,tol)`. Entry point: `return practice::run_all_tests();`
+  - `EXPECT_EQ` streams both operands into the failure message, so either operand's type must support `operator<<` (or be a `std::vector` of such a type — vectors are handled by a built-in helper). For other container types, either extend `practice::write_value` in `test.h` or compare a scalar summary (size, hash, element).
 - **timer.h** — `practice::ScopedTimer` RAII timer that prints elapsed time on scope exit. Used in performance exercises.
