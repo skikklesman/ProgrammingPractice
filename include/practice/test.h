@@ -10,9 +10,30 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 namespace practice {
+
+template <class T>
+struct is_std_vector : std::false_type {};
+template <class T, class A>
+struct is_std_vector<std::vector<T, A>> : std::true_type {};
+
+template <class T>
+void write_value(std::ostream& os, const T& v) {
+    if constexpr (is_std_vector<T>::value) {
+        os << "[";
+        for (std::size_t i = 0; i < v.size(); ++i) {
+            if (i) os << ", ";
+            write_value(os, v[i]);
+        }
+        os << "]";
+    } else {
+        os << v;
+    }
+}
+
 
 struct TestCase {
     std::string name;
@@ -81,7 +102,11 @@ inline int run_all_tests() {
         auto&& _b = (b);                                                        \
         if (_a != _b) {                                                         \
             std::ostringstream _os;                                             \
-            _os << #a " == " #b " (" << _a << " vs " << _b << ")";            \
+            _os << #a " == " #b " (";                                           \
+            ::practice::write_value(_os, _a);                                   \
+            _os << " vs ";                                                      \
+            ::practice::write_value(_os, _b);                                   \
+            _os << ")";                                                         \
             ::practice::report_failure(__FILE__, __LINE__, _os.str());          \
         }                                                                       \
     } while (0)
