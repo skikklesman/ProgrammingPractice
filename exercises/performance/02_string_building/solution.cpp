@@ -1,4 +1,5 @@
 #include "solution.h"
+#include <charconv>
 
 // Build a comma-separated string of integers from 0 to n-1.
 // Example: build_sequence(4) → "0,1,2,3"
@@ -39,13 +40,16 @@ std::string build_sequence(int n) {
     size_t necessaryStringCapacity = (n * digitsInBiggestNumber) + (n-1);
     result.reserve(necessaryStringCapacity);
 
-    size_t resultIndex = 0;
     for (int i = 0; i < n; ++i)
     {
         if (i > 0) {
-            result.append(",");
+            result.push_back(',');
         }
-        result.append(std::to_string(i));
+
+        char buf[20]{};
+        std::to_chars_result toCharsResult = std::to_chars(buf, buf + 20, i);
+        std::string_view str(buf, toCharsResult.ptr-buf);
+        result.append(str);
     }
 
     return result;
