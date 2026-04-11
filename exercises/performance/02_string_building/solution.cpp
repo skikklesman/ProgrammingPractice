@@ -14,14 +14,38 @@
 // `+` operator. Each `+` allocates, copies, and frees. Over many iterations
 // this is O(n²) in total work. Find a way to build the string in O(n).
 std::string build_sequence(int n) {
-    std::string result = "";
-
-    // Slow: each `+` creates a temporary copy of the growing string
-    for (int i = 0; i < n; ++i) {
+    
+    // Original implementation (Slow): each `+` creates a temporary copy of the growing string
+    // std::string result = "";
+    /*for (int i = 0; i < n; ++i) {
         if (i > 0) {
             result = result + ",";
         }
         result = result + std::to_string(i);
+    }*/
+
+
+    // New optimized solution:
+    // Pre-allocate all of the space needed, then just fill in each slot as you go
+    // Space needed:
+    //  * n-1 ',' characters
+    //  * (num digits in biggest number) times n
+    std::string result = "";
+
+    if (0 == n)
+        return result;
+
+    int digitsInBiggestNumber = int(log10(n)) + 1;
+    size_t necessaryStringCapacity = (n * digitsInBiggestNumber) + (n-1);
+    result.reserve(necessaryStringCapacity);
+
+    size_t resultIndex = 0;
+    for (int i = 0; i < n; ++i)
+    {
+        if (i > 0) {
+            result.append(",");
+        }
+        result.append(std::to_string(i));
     }
 
     return result;
