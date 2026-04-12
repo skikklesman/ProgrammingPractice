@@ -1,4 +1,5 @@
 #include "solution.h"
+#include <unordered_set>
 
 // Remove duplicates from a vector, preserving the order of first occurrences.
 // Example: {3,1,4,1,5,9,2,6,5,3} → {3,1,4,5,9,2,6}
@@ -18,7 +19,7 @@ std::vector<int> dedup(const std::vector<int>& input) {
     std::vector<int> result;
 
     // Slow: for each element, scan all of result to check for duplicates
-    for (size_t i = 0; i < input.size(); ++i) {
+    /*for (size_t i = 0; i < input.size(); ++i) {
         bool found = false;
         for (size_t j = 0; j < result.size(); ++j) {
             if (result[j] == input[i]) {
@@ -28,6 +29,21 @@ std::vector<int> dedup(const std::vector<int>& input) {
         }
         if (!found) {
             result.push_back(input[i]);
+        }
+    }*/
+
+    // Fast: create an unordered_set<int> to store each number, lookup as we go and ignore existing ones.
+    std::unordered_set<int> inputSet;
+
+    // For each element, ask "Is this in the set?" and if not, add to set and to the result vector.
+    for (size_t i = 0; i < input.size(); ++i)
+    {
+        int value = input[i];
+        std::unordered_set<int>::const_iterator iter = inputSet.find(value);
+        if (iter == inputSet.cend()) // Not in the set
+        {
+            result.push_back(value);
+            inputSet.insert(value);
         }
     }
 
