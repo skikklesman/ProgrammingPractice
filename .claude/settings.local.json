@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Read(//c/Program Files/Microsoft Visual Studio/2022//**)",
-      "Read(//c/Program Files \\(x86\\)/Microsoft Visual Studio//**)"
+      "Read(//c/Program Files \\(x86\\)/Microsoft Visual Studio//**)",
+      "Bash(ctest --test-dir build -C Debug -R \"performance_0[78]\" --output-on-failure)"
     ]
   }
 }
