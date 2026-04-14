@@ -3,7 +3,9 @@
     "allow": [
       "Read(//c/Program Files/Microsoft Visual Studio/2022//**)",
       "Read(//c/Program Files \\(x86\\)/Microsoft Visual Studio//**)",
-      "Bash(ctest --test-dir build -C Debug -R \"performance_0[78]\" --output-on-failure)"
+      "Bash(ctest --test-dir build -C Debug -R \"performance_0[78]\" --output-on-failure)",
+      "Bash(cmake --build build --target bug_hunts_04_kv_store --config Debug)",
+      "Bash(ctest --test-dir build -R bug_hunts_04_kv_store -C Debug --output-on-failure)"
     ]
   }
 }
